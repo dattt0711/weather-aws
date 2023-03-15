@@ -1,4 +1,13 @@
 .textGray {
-    color: #ccc;
+    color: #bfbfbf;
     margin: 0;
+}
+
+.appBar {
+    background-color: #fff !important;
+}
+
+.titleAppBar {
+    color: #525051;
+    font-weight: bold;
 }

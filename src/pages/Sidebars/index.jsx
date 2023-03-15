@@ -69,7 +69,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function Sidebars(props) {
-  const {children} = props;
+  const { children } = props;
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -84,7 +84,7 @@ export default function Sidebars(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} className={styles.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -96,11 +96,11 @@ export default function Sidebars(props) {
             <MenuIcon />
           </IconButton>
           <Box>
-            <Typography variant="h6" noWrap component="div">
-                Weather Forecast
+            <Typography variant="h6" noWrap component="div" className={styles.titleAppBar}>
+              Weather Forecast
             </Typography>
-            <Typography variant="subtitle1" gutterBottom class={styles.textGray}>
-                Saturday 26, December 2020
+            <Typography variant="subtitle1" gutterBottom className={styles.textGray}>
+              Saturday 26, December 2020
             </Typography>
           </Box>
         </Toolbar>
@@ -118,7 +118,7 @@ export default function Sidebars(props) {
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
+        <DrawerHeader >
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
@@ -126,19 +126,6 @@ export default function Sidebars(props) {
         <Divider />
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
