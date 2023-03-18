@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import React from 'react'
 import { Box, Grid, Typography } from '@mui/material';
 import styles from './styles.module.css'
@@ -7,7 +8,7 @@ import HumidityImage from '../../images/humidity-sensor.png';
 import CloudImage from '../../images/cloud.png';
 import CelsiusImage from '../../images/celsius.png';
 export const WeatherCard = (props) => {
-    // const { data = [] } = props;
+    const { dataList } = props;
     const data = [
         {
             id: 1,
@@ -34,12 +35,12 @@ export const WeatherCard = (props) => {
     return (
         <Grid container ml={5} spacing={2}>
             {
-                data.map((item) => (
-                    <Grid key={item?.id} item xs={3} className={styles.weatherTodayContainer} mr={2} mt={2}>
+                dataList.map((item, index) => (
+                    <Grid key={index} item xs={3} className={styles.weatherTodayContainer} mr={6} mt={4}>
                         <Grid container alignItems="center" mt={2} >
                             <Grid item xs={6} className={styles.textCenter} mb={3}>
                                 <Typography className={clsx(styles.bold, styles.lgTitle)}>
-                                    Saturday
+                                    {moment(item?.Date).format('dddd')}
                                 </Typography>
                                 <Typography className={styles.light}>
                                     Partly Cloudy

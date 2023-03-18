@@ -18,9 +18,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-
+import HomeIcon from '@mui/icons-material/Home';
 import styles from './styles.module.css'
-
+import CloudIcon from '@mui/icons-material/Cloud';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -118,18 +118,19 @@ export default function Sidebars(props) {
         anchor="left"
         open={open}
       >
-        <DrawerHeader >
+        <DrawerHeader className={styles.textCenter}>
+          <Typography variant="h6" pr={2}>Weather App</Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Home'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
