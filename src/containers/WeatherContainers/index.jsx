@@ -12,9 +12,10 @@ import WindImage from '../../images/wind.png';
 import HumidityImage from '../../images/humidity-sensor.png';
 import CelsiusImage from '../../images/celsius.png';
 import FahrenheitImage from '../../images/fahrenheit.png';
-import { getLocationKey, getFiveDaysForecasts } from '../../services/utils';
+import { getLocationKey, getFiveDaysForecasts, getDailyForecasts } from '../../services/utils';
 const WeatherContainers = () => {
   const [listForecasts, setListForecasts] = useState([]);
+  const [dailyForecast, setDailyForeCast] = useState([]);
   const [value, setValue] = useState(1);
   const [isCelsius, setIsCelsius] = useState(false);
   const [location, setLocation] = useState({
@@ -41,21 +42,27 @@ const WeatherContainers = () => {
     const data = fiveDays?.data?.DailyForecasts
     setListForecasts(data);
   }, [])
+  useEffect(async () => {
+    const locationKey = localStorage.getItem('locationKey');
+    const dailyForecast = await getDailyForecasts(locationKey);
+    const data = dailyForecast?.data?.DailyForecasts[0];
+    setDailyForeCast(data);
+  }, [])
   return (
     <Box className={styles.mainWeather}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box className={styles.box}>
-            <Box className={clsx(styles.fullWidth)}>
+            <Box className={clsx(styles.fullWidth, styles.textColor)}>
               <img src={ImageCover} className={styles.coverImage} />
               <Box className={styles.coverText}>
-                <Typography variant="h4" fontSize={24} mb={1}>
+                <Typography variant="h4" fontSize={24} mb={1} className={styles.textColor}>
                   {location?.localName}
                 </Typography>
                 <Typography variant="subtitle1" mb={3}>
                   {location?.city}
                 </Typography>
-                <Typography variant="h3" >
+                <Typography variant="h3" fontSize={18}>
                   {location?.country}
                 </Typography>
               </Box>
@@ -81,7 +88,7 @@ const WeatherContainers = () => {
               </Box>
             </Box>
             <TabPanel value={value} index={0}>
-              <TodayTab />
+              <TodayTab data={dailyForecast} isCelsius={isCelsius}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <WeatherCard dataList={listForecasts} isCelsius={isCelsius}/>

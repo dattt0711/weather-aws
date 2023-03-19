@@ -119,6 +119,9 @@ export default function Sidebars(props) {
             width: drawerWidth,
             boxSizing: 'border-box',
           },
+          "& .MuiPaper-root": {
+            backgroundColor: '#ece5ee'
+          }
         }}
         variant="persistent"
         anchor="left"

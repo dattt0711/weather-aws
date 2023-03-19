@@ -21,7 +21,7 @@
     overflow: hidden;
     padding: 0;
     background-color: #ece5ee !important;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .drawer {

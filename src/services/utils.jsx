@@ -51,6 +51,7 @@ export const getDailyForecasts = async (locationKey) => {
         const result = await axios.get(url, {
             params: {
                 apikey: API_KEY,
+                details: true,
             },
         });
         return result;
