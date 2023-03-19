@@ -4,7 +4,7 @@
 }
 
 .appBar {
-    background-color: #fff !important;
+    background-color: #ece5ee !important;
 }
 
 .titleAppBar {
@@ -14,4 +14,19 @@
 
 .textCenter {
     text-align: center;
+}
+
+.main {
+    width: 100vw;
+    overflow: hidden;
+    padding: 0;
+    background-color: #ece5ee !important;
+    height: 100vh;
+}
+
+.drawer {
+    background-color: #ece5ee !important;
+}
+.css-1f2xuhi-MuiDrawer-docked .MuiDrawer-paper {
+    background-color: #ece5ee !important;
 }

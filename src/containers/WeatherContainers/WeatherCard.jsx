@@ -7,47 +7,38 @@ import WindImage from '../../images/wind.png';
 import HumidityImage from '../../images/humidity-sensor.png';
 import CloudImage from '../../images/cloud.png';
 import CelsiusImage from '../../images/celsius.png';
+import FahrenheitImage from '../../images/fahrenheit.png';
+import { convertToCelsius, convertToF } from '../../services/utils';
 export const WeatherCard = (props) => {
-    const { dataList } = props;
-    const data = [
-        {
-            id: 1,
-        },
-        {
-            id: 2,
-        },
-        {
-            id: 3,
-        },
-        {
-            id: 4,
-        },
-        {
-            id: 5,
-        },
-        {
-            id: 6,
-        },
-        {
-            id: 7,
-        },
-    ];
+    const { dataList, isCelsius } = props;
+    const renderTemperature = (min, max) => {
+        if(isCelsius) return convertToCelsius(min, max);
+        return (+min + +max)/2;
+    }
+    const convertIconNumber = (data) => {
+        let urlImg = `https://developer.accuweather.com/sites/default/files/${data}-s.png`;
+        if (+data < 10) urlImg = `https://developer.accuweather.com/sites/default/files/0${data}-s.png`;
+        return urlImg;
+    }
+    const renderImageTemperature = () => {
+        return isCelsius ? CelsiusImage : FahrenheitImage;
+    }
     return (
         <Grid container ml={5} spacing={2}>
             {
                 dataList.map((item, index) => (
-                    <Grid key={index} item xs={3} className={styles.weatherTodayContainer} mr={6} mt={4}>
+                    <Grid key={index} item xs={3} className={clsx(styles.weatherTodayContainer, {[styles.activeWeatherToday]: index === 0})} mr={6} mt={4}>
                         <Grid container alignItems="center" mt={2} >
                             <Grid item xs={6} className={styles.textCenter} mb={3}>
                                 <Typography className={clsx(styles.bold, styles.lgTitle)}>
                                     {moment(item?.Date).format('dddd')}
                                 </Typography>
                                 <Typography className={styles.light}>
-                                    Partly Cloudy
+                                    {item?.Day?.IconPhrase}
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} className={styles.textCenter}>
-                                <img src={CloudImage} alt="" className={styles.lgIcon} />
+                                <img src={convertIconNumber(item?.Day?.Icon)} alt="" className={styles.lgIcon} />
                             </Grid>
                         </Grid>
                         <Grid container alignItems="center" mb={2}>
@@ -55,22 +46,22 @@ export const WeatherCard = (props) => {
                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} mb={1}>
                                     <img src={WindImage} alt="" className={styles.smallIcon} />
                                     <Typography pl={1} className={styles.mdSubtitle}>
-                                        10.3 km/h
+                                        {item?.Day?.Wind?.Speed?.Value} mi/h
                                     </Typography>
                                 </Box>
                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <img src={HumidityImage} alt="" className={styles.smallIcon} />
                                     <Typography pl={1} className={styles.mdSubtitle}>
-                                        60%
+                                        {item?.Day?.RainProbability} %
                                     </Typography>
                                 </Box>
                             </Grid>
                             <Grid item xs={6} className={styles.textCenter}>
                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <Typography className={styles.xlText} mr={1}>
-                                        32
+                                        {renderTemperature(item?.Temperature?.Minimum?.Value, item?.Temperature?.Maximum?.Value)}
                                     </Typography>
-                                    <img src={CelsiusImage} alt="" className={styles.mdIcon} />
+                                    <img src={renderImageTemperature()} alt="" className={styles.mdIcon} />
                                 </Box>
                             </Grid>
                         </Grid>

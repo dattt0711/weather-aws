@@ -23,7 +23,17 @@
 
 .weatherTodayContainer {
     border-radius: 20px;
-    border: 3px solid #e9d7d7;
+    border: 2px solid #ccc;
+    background-color: #f8e6e8;
+}
+
+.activeWeatherToday {
+    border-color: #e9bcc4 !important;
+}
+
+.mainWeather {
+    background-color: #ece5ee;
+    padding: 0 !important;
 }
 
 .textCenter {
@@ -63,10 +73,14 @@
 
 .lgIcon {
     width: 60px;
-    height: 60px;
+    height: 50px;
 }
 
 .rightNav {
     background-color: red;
     height: 100%;
+}
+
+.activeIconButton {
+    background-color: #ccc !important;
 }
