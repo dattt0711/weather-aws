@@ -27,6 +27,14 @@
 .drawer {
     background-color: #ece5ee !important;
 }
+
 .css-1f2xuhi-MuiDrawer-docked .MuiDrawer-paper {
     background-color: #ece5ee !important;
+}
+
+.flexBetween {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
 }

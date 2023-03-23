@@ -23,7 +23,10 @@ import styles from './styles.module.css'
 import CloudIcon from '@mui/icons-material/Cloud';
 import * as moment from 'moment';
 import clsx from 'clsx';
-
+import { alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import WeatherContainers from '../../containers/WeatherContainers';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -71,9 +74,53 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 
 }));
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: '#ccc',
+  '&:hover': {
+    backgroundColor: '#ccc',
+  },
+  display: 'flex',
+  alignItems: 'center',
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+  height: '50%',
+}));
 
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
 export default function Sidebars(props) {
   const { children } = props;
+  const [search, setSearch] = React.useState('Hanoi');
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -84,7 +131,9 @@ export default function Sidebars(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  const handleOnChange = (event) => {
+    setSearch(event.target.value);
+  }
   return (
     <Box sx={{ display: 'flex' }} className={styles.drawer}>
       <CssBaseline />
@@ -99,14 +148,26 @@ export default function Sidebars(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Box>
-            <Typography variant="h6" noWrap component="div" className={styles.titleAppBar}>
-              Weather Forecast
-            </Typography>
-            <Typography variant="subtitle1" gutterBottom className={styles.textGray}>
-              {/* Saturday 26, December 2020 */}
-              {moment().format('dddd') + " " + moment().format('DD') + ", " + moment().format('MMMM') + " " + moment().format('YYYY')}
-            </Typography>
+          <Box className={styles.flexBetween}>
+            <Box>
+              <Typography variant="h6" noWrap component="div" className={styles.titleAppBar}>
+                Weather Forecast
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom className={styles.textGray}>
+                {/* Saturday 26, December 2020 */}
+                {moment().format('dddd') + " " + moment().format('DD') + ", " + moment().format('MMMM') + " " + moment().format('YYYY')}
+              </Typography>
+            </Box>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={(event) => handleOnChange(event)}
+              />
+            </Search>
           </Box>
         </Toolbar>
       </AppBar>
@@ -148,8 +209,8 @@ export default function Sidebars(props) {
         </List>
       </Drawer>
       <Main open={open} className={styles.main}>
-        <DrawerHeader className={styles.drawer}/>
-        {children}
+        <DrawerHeader className={styles.drawer} />
+        <WeatherContainers search={search} />
       </Main>
     </Box>
   );
