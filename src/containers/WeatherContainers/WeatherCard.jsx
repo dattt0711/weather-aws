@@ -43,7 +43,7 @@ export const WeatherCard = (props) => {
                                     {moment(item?.Date).format('dddd')}
                                 </Typography>
                                 <Typography className={styles.light}>
-                                    Partly Cloudy
+                                    {item?.Day?.IconPhrase}
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} className={styles.textCenter}>
