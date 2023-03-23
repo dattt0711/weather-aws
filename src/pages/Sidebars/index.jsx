@@ -21,6 +21,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import HomeIcon from '@mui/icons-material/Home';
 import styles from './styles.module.css'
 import CloudIcon from '@mui/icons-material/Cloud';
+import * as moment from 'moment';
+import clsx from 'clsx';
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -66,6 +69,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
+
 }));
 
 export default function Sidebars(props) {
@@ -82,7 +86,7 @@ export default function Sidebars(props) {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }} className={styles.drawer}>
       <CssBaseline />
       <AppBar position="fixed" open={open} className={styles.appBar}>
         <Toolbar>
@@ -100,12 +104,14 @@ export default function Sidebars(props) {
               Weather Forecast
             </Typography>
             <Typography variant="subtitle1" gutterBottom className={styles.textGray}>
-              Saturday 26, December 2020
+              {/* Saturday 26, December 2020 */}
+              {moment().format('dddd') + " " + moment().format('DD') + ", " + moment().format('MMMM') + " " + moment().format('YYYY')}
             </Typography>
           </Box>
         </Toolbar>
       </AppBar>
       <Drawer
+        className={styles.drawer}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -113,19 +119,22 @@ export default function Sidebars(props) {
             width: drawerWidth,
             boxSizing: 'border-box',
           },
+          "& .MuiPaper-root": {
+            backgroundColor: '#ece5ee'
+          }
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <DrawerHeader className={styles.textCenter}>
+        <DrawerHeader className={clsx(styles.textCenter, styles.drawer)}>
           <Typography variant="h6" pr={2}>Weather App</Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List className={styles.drawer}>
           {['Home'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
@@ -138,8 +147,8 @@ export default function Sidebars(props) {
           ))}
         </List>
       </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
+      <Main open={open} className={styles.main}>
+        <DrawerHeader className={styles.drawer}/>
         {children}
       </Main>
     </Box>

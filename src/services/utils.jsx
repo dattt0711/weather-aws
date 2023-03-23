@@ -37,6 +37,7 @@ export const getFiveDaysForecasts = async (locationKey) => {
         const result = await axios.get(url, {
             params: {
                 apikey: API_KEY,
+                details: true,
             },
         });
         return result;
@@ -50,9 +51,26 @@ export const getDailyForecasts = async (locationKey) => {
         const result = await axios.get(url, {
             params: {
                 apikey: API_KEY,
+                details: true,
             },
         });
         return result;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const convertToF = (min, max=0) => {
+    try {
+        return  Math.round((+min + +max)/2 * 1.8 + 32, 0);
+    } catch (error) {
+        return error;
+    }
+}
+
+export const convertToCelsius = (min, max=0) => {
+    try {
+        return Math.round(((+min + +max)/2 - 32) / 1.8, 0);
     } catch (error) {
         return error;
     }
